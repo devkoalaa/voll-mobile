@@ -4,7 +4,7 @@ import { Botao } from "./Botao";
 interface CardProps {
   nome: string;
   foto: string;
-  expecialidade: string;
+  especialidade: string;
   data?: string;
   foiAtendido?: boolean;
   foiAgendado?: boolean;
@@ -14,7 +14,7 @@ export function CardConsulta({
   nome,
   foto,
   data,
-  expecialidade,
+  especialidade,
   foiAtendido,
   foiAgendado,
 }: CardProps) {
@@ -32,7 +32,7 @@ export function CardConsulta({
           <Text fontSize={"md"} fontWeight={"bold"}>
             {nome}
           </Text>
-          <Text>{expecialidade}</Text>
+          <Text>{especialidade}</Text>
           <Text>{data}</Text>
         </VStack>
       </VStack>
