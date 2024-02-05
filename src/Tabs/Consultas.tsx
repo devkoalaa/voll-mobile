@@ -1,7 +1,7 @@
 import { Box, Divider, ScrollView, VStack } from "native-base";
-import { Botao } from "../components/Botao";
+import { Button } from "../components/Button";
 import { CardConsulta } from "../components/CardConsulta";
-import { Titulo } from "../components/Titulo";
+import { Title } from "../components/Title";
 
 const consultas = [
   {
@@ -25,16 +25,16 @@ const consultas = [
 export default function Consultas() {
   return (
     <ScrollView flex={1} p={5}>
-      <Titulo color={"blue.500"}>Minhas consultas</Titulo>
-      <Botao my={5}>Agendar nova consulta</Botao>
-      <Titulo
+      <Title color={"blue.500"}>Minhas consultas</Title>
+      <Button my={5}>Agendar nova consulta</Button>
+      <Title
         alignSelf={"flex-start"}
         fontSize={"lg"}
         color={"blue.500"}
         mb={2}
       >
         Próximas consultas
-      </Titulo>
+      </Title>
       <CardConsulta
         nome="Dr. Klebão do Pneu"
         foto="https://github.com/devkoalaa.png"
@@ -43,14 +43,14 @@ export default function Consultas() {
         foiAgendado
       />
       <Divider mt={5} />
-      <Titulo
+      <Title
         alignSelf={"flex-start"}
         fontSize={"lg"}
         color={"blue.500"}
         mb={2}
       >
         Consultas passadas
-      </Titulo>
+      </Title>
       {consultas.map((consulta, index) => {
         return (
           <Box key={index}>

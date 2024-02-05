@@ -1,70 +1,110 @@
-import {
-  Box,
-  Image,
-  Link,
-  Text,
-  VStack,
-  Checkbox,
-  ScrollView,
-} from "native-base";
-import { TouchableOpacity } from "react-native";
-import Logo from "./assets/Logo.png";
-import { Botao } from "./components/Botao";
-import { EntradaTexto } from "./components/EntradaTexto";
-import { Titulo } from "./components/Titulo";
+import { Box, Checkbox, Image, ScrollView, Text, useToast } from "native-base";
 import React, { useState } from "react";
-import { secoes } from "./utils/CadastroEntradaTexto";
+import Logo from "./assets/Logo.png";
+import { Button } from "./components/Button";
+import { InputText } from "./components/InputText";
+import { Title } from "./components/Title";
+import { sections } from "./utils/CadastroInputs";
+import { cadastro } from "./servicos/cadastro";
+import { FormData } from "./utils/interfaces";
 
 export default function Cadastro() {
-  const [numSecao, setNumSecao] = useState(0);
+  const [numSection, setNumSection] = useState(0);
+  const [formData, setFormData] = useState<FormData | Object>({});
+  const [planos, setPlanos] = useState<number[]>([]);
+  const toast = useToast();
 
-  const avancarSecao = () => {
-    numSecao < secoes.length - 1 && setNumSecao(numSecao + 1);
+  const nextSection = () => {
+    numSection < sections.length - 1 && setNumSection(numSection + 1);
+    numSection == sections.length - 1 && submitCadastro();
   };
 
-  const voltarSecao = () => {
-    numSecao > 0 && setNumSecao(numSecao - 1);
+  const previousSection = () => {
+    numSection > 0 && setNumSection(numSection - 1);
   };
+
+  function changeFormData(name: string, value: string) {
+    if (name.startsWith("endereco.")) {
+      name = name.split("endereco.")[1];
+      setFormData({
+        ...formData,
+        ["endereco"]: { ...formData["endereco"], [name]: value },
+      });
+
+      return;
+    }
+
+    setFormData({ ...formData, [name]: value });
+  }
+
+  function submitCadastro() {
+    // console.log(planos)
+    // setFormData({ ...formData, ["planosSaude"]: planos});
+    // console.log("formData:", formData);
+
+    const result = cadastro(formData as FormData, planos);
+    console.log("cadastro rslt:", result);
+  }
 
   return (
     <ScrollView flex={1} p={5}>
       <Image source={Logo} alt={"Logo Voll"} alignSelf={"center"} />
-      <Titulo>{secoes[numSecao].titulo}</Titulo>
-      {secoes[numSecao].entradaTexto && (
+      <Title>{sections[numSection].title}</Title>
+      {sections[numSection].inputText && (
         <Box>
-          {secoes[numSecao].entradaTexto.map((entrada) => {
+          {sections[numSection].inputText.map((input, index) => {
             return (
-              <EntradaTexto
-                label={entrada.label}
-                placeholder={entrada.placeholder}
-                key={entrada.id}
+              <InputText
+                label={input.label}
+                placeholder={input.placeholder}
+                key={input.id}
+                secureTextEntry={input.secureTextEntry}
+                value={formData[index]}
+                onChangeText={(text) => changeFormData(input.name, text)}
               />
             );
           })}
         </Box>
       )}
-      {secoes[numSecao].checkbox && (
+      {sections[numSection].checkbox && (
         <Box>
           <Text color="blue.800" fontWeight={"bold"} fontSize={"md"} my={2}>
             Selecione seus planos:
           </Text>
-          {secoes[numSecao].checkbox.map((checkbox) => {
+          {sections[numSection].checkbox.map((checkbox) => {
             return (
-              <Checkbox value={checkbox.value} key={checkbox.id}>
+              <Checkbox
+                value={checkbox.value}
+                key={checkbox.id}
+                onChange={() => {
+                  setPlanos((planosAnteriores) => {
+                    if (
+                      planosAnteriores &&
+                      planosAnteriores.includes(checkbox.id)
+                    ) {
+                      return planosAnteriores.filter(
+                        (id) => id !== checkbox.id
+                      );
+                    }
+                    return [...planosAnteriores, checkbox.id];
+                  });
+                }}
+                isChecked={planos.includes(checkbox.id)}
+              >
                 {checkbox.value}
               </Checkbox>
             );
           })}
         </Box>
       )}
-      {numSecao > 0 && (
-        <Botao onPress={voltarSecao} bgColor={"gray.500"} mt={4}>
+      {numSection > 0 && (
+        <Button onPress={previousSection} bgColor={"gray.500"} mt={4}>
           Voltar
-        </Botao>
+        </Button>
       )}
-      <Botao onPress={avancarSecao} mt={4} mb={10}>
-        {numSecao == secoes.length - 1 ? "Cadastrar!" : "Avançar"}
-      </Botao>
+      <Button onPress={nextSection} mt={4} mb={10}>
+        {numSection == sections.length - 1 ? "Cadastrar!" : "Avançar"}
+      </Button>
     </ScrollView>
   );
 }

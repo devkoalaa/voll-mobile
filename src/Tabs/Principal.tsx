@@ -1,8 +1,9 @@
-import { Box, Divider, Image, ScrollView, Stack, VStack } from "native-base";
+import { Box, Divider, Image, ScrollView, VStack } from "native-base";
 import Logo from "../assets/Logo.png";
-import { EntradaTexto } from "../components/EntradaTexto";
-import { Botao } from "../components/Botao";
-import { Titulo } from "../components/Titulo";
+import { InputText } from "../components/InputText";
+import { Button } from "../components/Button";
+import { Title } from "../components/Title";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const depoimentos = [
   {
@@ -23,13 +24,17 @@ const depoimentos = [
 ];
 
 export default function Principal() {
+  const limparStorage = () => {
+    AsyncStorage.clear();
+  };
+
   return (
     <ScrollView flex={1} bgColor={"#fff"}>
       <VStack ml={5} mt={5}>
         <Image source={Logo} alt={"Logo Voll"} />
-        <Titulo color={"blue.500"} textAlign={"left"}>
+        <Title color={"blue.500"} textAlign={"left"}>
           Boas-vindas!
-        </Titulo>
+        </Title>
       </VStack>
       <Box
         alignItems={"center"}
@@ -39,20 +44,20 @@ export default function Principal() {
         p={5}
         m={5}
       >
-        <EntradaTexto placeholder="Digite a especialidade" />
-        <EntradaTexto placeholder="Digite sua localização" />
-        <Botao>Buscar</Botao>
+        <InputText placeholder="Digite a especialidade" />
+        <InputText placeholder="Digite sua localização" />
+        <Button onPress={limparStorage}>Buscar</Button>
       </Box>
-      <Titulo color={"blue.800"} fontWeight={"bold"} my={4}>
+      <Title color={"blue.800"} fontWeight={"bold"} my={4}>
         Depoimentos
-      </Titulo>
+      </Title>
       {depoimentos.map((depoimento, index) => {
         return (
           <VStack mx={5} key={index}>
-            <Titulo fontSize={"md"} fontWeight={"normal"} textAlign={"justify"}>
+            <Title fontSize={"md"} fontWeight={"normal"} textAlign={"justify"}>
               {depoimento.depoimento}
-            </Titulo>
-            <Titulo>{depoimento.autor}</Titulo>
+            </Title>
+            <Title>{depoimento.autor}</Title>
             <Divider mt={5} />
           </VStack>
         );

@@ -1,11 +1,11 @@
 import { ITextProps, Text } from "native-base";
 import { ReactNode } from "react";
 
-interface TituloProps extends ITextProps {
+interface TitleProps extends ITextProps {
   children: ReactNode;
 }
 
-export function Titulo({ children, ...rest }: TituloProps) {
+export function Title({ children, ...rest }: TitleProps) {
   return (
     <Text
       fontSize={"2xl"}

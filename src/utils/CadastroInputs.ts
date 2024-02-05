@@ -1,67 +1,96 @@
-const secoes = [
+const sections = [
     {
         id: 1,
-        titulo: "Insira alguns dados básicos",
-        entradaTexto: [
+        title: "Insira alguns dados básicos",
+        inputText: [
             {
                 id: 1,
                 label: "Nome",
-                placeholder: "Insira seu nome completo",
+                name: "nome",
+                placeholder: "Insira seu nome completo"
             },
             {
                 id: 2,
                 label: "Email",
-                placeholder: "Insira seu email",
+                name: "email",
+                placeholder: "Insira seu email"
             },
             {
                 id: 3,
                 label: "Crie uma senha",
+                name: "senha",
                 placeholder: "Insira sua senha",
+                secureTextEntry: true
             },
             {
                 id: 4,
-                label: "Repita a senha",
+                label: "Confirme sua senha",
+                name: "confirmaSenha",
                 placeholder: "Insira sua senha",
+                secureTextEntry: true
             },
+            {
+                id: 5,
+                label: "CPF",
+                name: "cpf",
+                placeholder: "Insira seu CPF"
+            },
+            {
+                id: 6,
+                label: "Imagem de perfil",
+                name: "imagem",
+                placeholder: "URL da imagem"
+            }
         ],
-        checkbox: null,
+        checkbox: null
     },
     {
         id: 2,
-        titulo: "Agora, mais alguns dados sobre você",
-        entradaTexto: [
+        title: "Agora, mais alguns dados sobre você",
+        inputText: [
             {
                 id: 1,
                 label: "CEP",
-                placeholder: "Insira seu CEP",
+                name: "endereco.cep",
+                placeholder: "Insira seu CEP"
             },
             {
                 id: 2,
-                label: "Endereço",
-                placeholder: "Insira seu endereço",
+                label: "Rua",
+                name: "endereco.rua",
+                placeholder: "Nome da rua"
             },
             {
                 id: 3,
                 label: "Número",
-                placeholder: "Insira seu número",
+                name: "endereco.numero",
+                placeholder: "Insira seu número"
             },
             {
                 id: 4,
                 label: "Complemento",
-                placeholder: "Insira seu complemento",
+                name: "endereco.complemento",
+                placeholder: "Insira seu complemento"
             },
             {
                 id: 5,
+                label: "Estado",
+                name: "endereco.estado",
+                placeholder: "Seu estado"
+            },
+            {
+                id: 6,
                 label: "Telefone",
-                placeholder: "(00) 0 0000-0000",
+                name: "telefone",
+                placeholder: "(00) 0 0000-0000"
             },
         ],
-        checkbox: null,
+        checkbox: null
     },
     {
         id: 3,
-        titulo: "Para finalizar, quais são seus planos de saúde?",
-        entradaTexto: null,
+        title: "Para finalizar, quais são seus planos de saúde?",
+        inputText: null,
         checkbox: [
             {
                 id: 1,
@@ -99,4 +128,4 @@ const secoes = [
     },
 ];
 
-export { secoes }
+export { sections }

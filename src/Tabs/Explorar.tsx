@@ -1,8 +1,8 @@
 import { VStack, Box, ScrollView } from "native-base";
-import { EntradaTexto } from "../components/EntradaTexto";
-import { Botao } from "../components/Botao";
+import { InputText } from "../components/InputText";
+import { Button } from "../components/Button";
 import { CardConsulta } from "../components/CardConsulta";
-import { Titulo } from "../components/Titulo";
+import { Title } from "../components/Title";
 
 export default function Explorar() {
   return (
@@ -21,16 +21,16 @@ export default function Explorar() {
           shadow="1"
           borderRightRadius="md"
         >
-          <EntradaTexto placeholder="Digite a especialidade" />
-          <EntradaTexto placeholder="Digite sua localização" />
-          <Botao mt={3} mb={3}>
+          <InputText placeholder="Digite a especialidade" />
+          <InputText placeholder="Digite sua localização" />
+          <Button mt={3} mb={3}>
             Buscar
-          </Botao>
+          </Button>
         </Box>
 
-        <Titulo color="blue.500" alignSelf="center">
+        <Title color="blue.500" alignSelf="center">
           Resultado da Busca
-        </Titulo>
+        </Title>
         {[1, 2, 3].map((_, index) => (
           <VStack
             flex={1}

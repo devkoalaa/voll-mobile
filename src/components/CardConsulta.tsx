@@ -1,5 +1,5 @@
 import { Text, Avatar, VStack } from "native-base";
-import { Botao } from "./Botao";
+import { Button } from "./Button";
 
 interface CardProps {
   nome: string;
@@ -36,9 +36,9 @@ export function CardConsulta({
           <Text>{data}</Text>
         </VStack>
       </VStack>
-      <Botao mt={4}>
+      <Button mt={4}>
         {foiAgendado ? "Cancelar" : "Agendar consulta"}
-      </Botao>
+      </Button>
     </VStack>
   );
 }
