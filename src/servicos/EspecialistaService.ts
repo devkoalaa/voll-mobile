@@ -1,12 +1,15 @@
 import api from "./api"
-import { Paciente } from "../utils/interfaces"
 
-export async function cadastrarPaciente(paciente: Paciente) {
-    if (!paciente) { return null }
+export async function buscarEspecialista(estado: string, especialidade: string) {
+    if (!estado || !especialidade) { return null }
 
     try {
-        const result = await api.post('/paciente', paciente)
-        console.log('cadastrarPaciente -> ', result.data)
+        const result = await api.get('/especialista/busca', {
+            params: {
+                estado, especialidade
+            }
+        })
+        console.log('buscarEspecialista -> ', result.data)
 
         return result.data
     } catch (error) {

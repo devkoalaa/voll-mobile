@@ -5,7 +5,7 @@ import { Button } from "./components/Button";
 import { InputText } from "./components/InputText";
 import { Title } from "./components/Title";
 import { useEffect, useState } from "react";
-import { login } from "./servicos/login";
+import { login } from "./servicos/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
 import "core-js/stable/atob";
@@ -37,7 +37,7 @@ export default function Login({ navigation }) {
 
       const tokenDecoded = jwtDecode(token) as any;
       const pacienteId = tokenDecoded.id;
-      AsyncStorage.setItem("vollPacientId", pacienteId);
+      AsyncStorage.setItem("vollPacienteId", pacienteId);
 
       navigation.replace("Tabs");
     } else {

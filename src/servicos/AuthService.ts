@@ -9,10 +9,16 @@ export async function login(email: string, password: string) {
             senha: password
         })
 
+        console.log('login -> ', result.data)
+
         return result.data
     } catch (error) {
-        console.error('error login', error)
+        if (error.isAxiosError) {
 
-        return null
+            return {
+                error: true,
+                message: error.message
+            }
+        }
     }
 }

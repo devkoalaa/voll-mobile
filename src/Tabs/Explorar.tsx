@@ -1,10 +1,41 @@
-import { VStack, Box, ScrollView } from "native-base";
+import { VStack, Box, ScrollView, useToast } from "native-base";
 import { InputText } from "../components/InputText";
 import { Button } from "../components/Button";
 import { CardConsulta } from "../components/CardConsulta";
 import { Title } from "../components/Title";
+import { useState } from "react";
+import { buscarEspecialista } from "../servicos/EspecialistaService";
 
 export default function Explorar() {
+  const toast = useToast();
+  const [estado, setEstado] = useState("");
+  const [especialidade, setEspecialidade] = useState("");
+  const [resultBusca, setResultBusca] = useState([]);
+
+  async function buscar() {
+    if (!estado || !especialidade) return null;
+
+    const result = await buscarEspecialista(estado, especialidade);
+
+    if (result.error) {
+      toast.show({
+        title: "Falha",
+        description: "Especialista não encontrado.",
+        backgroundColor: "red.500",
+      });
+
+      return;
+    }
+
+    setResultBusca(result);
+
+    toast.show({
+      title: "Sucesso",
+      description: "Especialistas encontrados.",
+      backgroundColor: "green.500",
+    });
+  }
+
   return (
     <ScrollView flex={1} bgColor="white">
       <VStack
@@ -21,9 +52,17 @@ export default function Explorar() {
           shadow="1"
           borderRightRadius="md"
         >
-          <InputText placeholder="Digite a especialidade" />
-          <InputText placeholder="Digite sua localização" />
-          <Button mt={3} mb={3}>
+          <InputText
+            placeholder="Digite a especialidade"
+            value={especialidade}
+            onChangeText={setEspecialidade}
+          />
+          <InputText
+            placeholder="Digite sua localização"
+            value={estado}
+            onChangeText={setEstado}
+          />
+          <Button mt={3} mb={3} onPress={buscar}>
             Buscar
           </Button>
         </Box>
