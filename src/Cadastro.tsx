@@ -5,12 +5,12 @@ import { Button } from "./components/Button";
 import { InputText } from "./components/InputText";
 import { Title } from "./components/Title";
 import { sections } from "./utils/CadastroInputs";
-import { cadastro } from "./servicos/cadastro";
-import { FormData } from "./utils/interfaces";
+import { cadastrarPaciente } from "./servicos/PacienteService";
+import { Paciente } from "./utils/interfaces";
 
 export default function Cadastro() {
   const [numSection, setNumSection] = useState(0);
-  const [formData, setFormData] = useState<FormData | Object>({});
+  const [formData, setFormData] = useState({} as any);
   const [planos, setPlanos] = useState<number[]>([]);
   const toast = useToast();
 
@@ -24,26 +24,58 @@ export default function Cadastro() {
   };
 
   function changeFormData(name: string, value: string) {
-    if (name.startsWith("endereco.")) {
-      name = name.split("endereco.")[1];
-      setFormData({
-        ...formData,
-        ["endereco"]: { ...formData["endereco"], [name]: value },
+    // if (name.startsWith("endereco.")) {
+    //   name = name.split("endereco.")[1];
+    //   setFormData({
+    //     ...formData,
+    //     ["endereco"]: { ...formData["endereco"], [name]: value },
+    //   });
+
+    //   return;
+    // }
+
+    setFormData({ ...formData, [name]: value });
+  }
+
+  async function submitCadastro() {
+    // setFormData({ ...formData, ["planosSaude"]: planos});
+
+    // const result = cadastrarPaciente(formData as Paciente, planos);
+    const result = await cadastrarPaciente({
+      cpf: formData.cpf,
+      nome: formData.nome,
+      email: formData.email,
+      endereco: {
+        cep: formData.cep,
+        estado: formData.estado,
+        numero: formData.numero,
+        rua: formData.rua,
+        complemento: formData.complemento,
+      },
+      senha: formData.password,
+      telefone: formData.telefone,
+      possuiPlanoSaude: planos.length > 0,
+      planosSaude: planos,
+      imagem: formData.imagem,
+    });
+
+    console.log("cadastro rslt:", result);
+    
+    if (result) {
+      toast.show({
+        title: "Sucesso",
+        description: "O paciente foi criado.",
+        backgroundColor: "green.500",
       });
 
       return;
     }
 
-    setFormData({ ...formData, [name]: value });
-  }
-
-  function submitCadastro() {
-    // console.log(planos)
-    // setFormData({ ...formData, ["planosSaude"]: planos});
-    // console.log("formData:", formData);
-
-    const result = cadastro(formData as FormData, planos);
-    console.log("cadastro rslt:", result);
+    toast.show({
+      title: "Falha",
+      description: "O paciente não foi criado.",
+      backgroundColor: "red.500",
+    });
   }
 
   return (
