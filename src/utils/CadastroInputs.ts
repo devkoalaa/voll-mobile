@@ -51,31 +51,31 @@ const sections = [
             {
                 id: 1,
                 label: "CEP",
-                name: "endereco.cep",
+                name: "cep",
                 placeholder: "Insira seu CEP"
             },
             {
                 id: 2,
                 label: "Rua",
-                name: "endereco.rua",
+                name: "rua",
                 placeholder: "Nome da rua"
             },
             {
                 id: 3,
                 label: "Número",
-                name: "endereco.numero",
+                name: "numero",
                 placeholder: "Insira seu número"
             },
             {
                 id: 4,
                 label: "Complemento",
-                name: "endereco.complemento",
+                name: "complemento",
                 placeholder: "Insira seu complemento"
             },
             {
                 id: 5,
                 label: "Estado",
-                name: "endereco.estado",
+                name: "estado",
                 placeholder: "Seu estado"
             },
             {

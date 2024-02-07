@@ -4,9 +4,8 @@ import Logo from "./assets/Logo.png";
 import { Button } from "./components/Button";
 import { InputText } from "./components/InputText";
 import { Title } from "./components/Title";
-import { sections } from "./utils/CadastroInputs";
 import { cadastrarPaciente } from "./servicos/PacienteService";
-import { Paciente } from "./utils/interfaces";
+import { sections } from "./utils/CadastroInputs";
 
 export default function Cadastro() {
   const [numSection, setNumSection] = useState(0);
@@ -24,23 +23,10 @@ export default function Cadastro() {
   };
 
   function changeFormData(name: string, value: string) {
-    // if (name.startsWith("endereco.")) {
-    //   name = name.split("endereco.")[1];
-    //   setFormData({
-    //     ...formData,
-    //     ["endereco"]: { ...formData["endereco"], [name]: value },
-    //   });
-
-    //   return;
-    // }
-
     setFormData({ ...formData, [name]: value });
   }
 
   async function submitCadastro() {
-    // setFormData({ ...formData, ["planosSaude"]: planos});
-
-    // const result = cadastrarPaciente(formData as Paciente, planos);
     const result = await cadastrarPaciente({
       cpf: formData.cpf,
       nome: formData.nome,
@@ -52,29 +38,27 @@ export default function Cadastro() {
         rua: formData.rua,
         complemento: formData.complemento,
       },
-      senha: formData.password,
+      senha: formData.senha,
       telefone: formData.telefone,
       possuiPlanoSaude: planos.length > 0,
       planosSaude: planos,
       imagem: formData.imagem,
     });
 
-    console.log("cadastro rslt:", result);
-    
-    if (result) {
+    if (result.error) {
       toast.show({
-        title: "Sucesso",
-        description: "O paciente foi criado.",
-        backgroundColor: "green.500",
+        title: "Falha",
+        description: "O paciente não foi criado.",
+        backgroundColor: "red.500",
       });
 
       return;
     }
 
     toast.show({
-      title: "Falha",
-      description: "O paciente não foi criado.",
-      backgroundColor: "red.500",
+      title: "Sucesso",
+      description: "O paciente foi criado.",
+      backgroundColor: "green.500",
     });
   }
 
