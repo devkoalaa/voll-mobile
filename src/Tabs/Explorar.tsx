@@ -5,12 +5,13 @@ import { CardConsulta } from "../components/CardConsulta";
 import { Title } from "../components/Title";
 import { useState } from "react";
 import { buscarEspecialista } from "../servicos/EspecialistaService";
+import { Especialista } from "../utils/interfaces";
 
 export default function Explorar() {
   const toast = useToast();
   const [estado, setEstado] = useState("");
   const [especialidade, setEspecialidade] = useState("");
-  const [resultBusca, setResultBusca] = useState([]);
+  const [resultEspecialista, setResultBusca] = useState([]);
 
   async function buscar() {
     if (!estado || !especialidade) return null;
@@ -67,10 +68,10 @@ export default function Explorar() {
           </Button>
         </Box>
 
-        <Title color="blue.500" alignSelf="center">
+        <Title color="blue.500" alignSelf="center" mb={2}>
           Resultado da Busca
         </Title>
-        {[1, 2, 3].map((_, index) => (
+        {resultEspecialista.map((especialista: Especialista, index) => (
           <VStack
             flex={1}
             w="100%"
@@ -80,9 +81,10 @@ export default function Explorar() {
             mb={5}
           >
             <CardConsulta
-              especialidade="Cardiologia"
-              foto="https://github.com/devkoalaa.png"
-              nome="Dr. Klebão do Pneu"
+              especialidade={especialista.especialidade}
+              foto={especialista.imagem}
+              nome={especialista.nome}
+              onPress={console.log}
             />
           </VStack>
         ))}

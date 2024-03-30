@@ -19,3 +19,16 @@ export interface Endereco {
     complemento?: string,
     estado: string
 }
+
+export interface Especialista {
+    id: string,
+    nome: string,
+    // crm: string,
+    imagem: string,
+    especialidade: string,
+    // email: string,
+    // telefone: string,
+    // possuiPlanoSaude: true,
+    // planosSaude: number[],
+    // avaliacoes: string[]
+}

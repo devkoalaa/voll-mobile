@@ -4,6 +4,7 @@ import { InputText } from "../components/InputText";
 import { Button } from "../components/Button";
 import { Title } from "../components/Title";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
 
 const depoimentos = [
   {
@@ -24,10 +25,6 @@ const depoimentos = [
 ];
 
 export default function Principal() {
-  const limparStorage = () => {
-    AsyncStorage.clear();
-  };
-
   return (
     <ScrollView flex={1} bgColor={"#fff"}>
       <VStack ml={5} mt={5}>
@@ -46,7 +43,7 @@ export default function Principal() {
       >
         <InputText placeholder="Digite a especialidade" />
         <InputText placeholder="Digite sua localização" />
-        <Button onPress={limparStorage}>Buscar</Button>
+        <Button>Buscar</Button>
       </Box>
       <Title color={"blue.800"} fontWeight={"bold"} my={4}>
         Depoimentos
